@@ -96,6 +96,7 @@ class Network:
         self.saver = tf.compat.v1.train.Saver(my_vars, max_to_keep=100)
         c_proto = tf.compat.v1.ConfigProto()
         c_proto.gpu_options.allow_growth = True
+        c_proto.allow_soft_placement = True
         c_proto.log_device_placement = True
         self.sess = tf.compat.v1.Session(config=c_proto)
         self.merged = tf.compat.v1.summary.merge_all()

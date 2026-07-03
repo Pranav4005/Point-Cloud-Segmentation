@@ -389,8 +389,7 @@ if __name__ == '__main__':
 
     if Mode == 'train':
         print("Starting training...")
-        with tf.device('/GPU:0'):
-            model = Network(dataset, cfg)
+        model = Network(dataset, cfg)
         model.train(dataset)
 
     elif Mode == 'test':
