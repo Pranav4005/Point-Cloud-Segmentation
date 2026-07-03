@@ -18,7 +18,7 @@ import glob
 class DALES:
     def __init__(self, test_id=None):
         self.name = 'DALES'
-        self.dataset_path = '/content/DALES/DALESObjects'
+        self.dataset_path = '/kaggle/input/datasets/ganimisettipranav/dales-obj/DALESObjects'
 
         self.label_to_names = {
             0: 'ground',
