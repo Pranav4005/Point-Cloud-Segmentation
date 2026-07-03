@@ -235,11 +235,20 @@ class Network:
                     snapshot_directory
                 ) else None
 
-                self.saver.save(
+                save_path=self.saver.save(
                     self.sess,
                     snapshot_directory + '/snap',
                     global_step=self.training_step
                 )
+                print('Model saved in file: %s' % save_path)
+
+            if len(self.mIou_list)==0 or m_iou > np.max(self.mIou_list):
+                best_path=self.saver.save(
+                    self.sess,
+                    snapshot_directory + '/best_snap',
+                    global_step=self.training_step
+                )
+                print('Best model saved in file: %s' % best_path)    
 
             self.mIou_list.append(m_iou)
 
