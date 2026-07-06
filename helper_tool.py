@@ -41,9 +41,9 @@ class ConfigSemanticKITTI:
     learning_rate = 1e-4
     lr_decays = {i: 0.95 for i in range(0, 500)}
 
-    train_sum_dir = 'train_log'
+    train_sum_dir = '/content/drive/MyDrive/RandLA_DALES_backup/train_log'
     saving = True
-    saving_path = None
+    saving_path = '/content/drive/MyDrive/RandLA_DALES_backup/results'
 
 
 class DataProcessing:

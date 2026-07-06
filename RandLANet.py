@@ -41,8 +41,8 @@ class Network:
 
             self.labels = self.inputs['labels']
             self.is_training = tf.compat.v1.placeholder(tf.bool, shape=())
-            self.training_step = 1
-            self.training_epoch = 0
+            self.training_step = 300
+            self.training_epoch = 10
             self.correct_prediction = 0
             self.accuracy = 0
             self.mIou_list = [0]
@@ -226,23 +226,16 @@ class Network:
             # Validation after each epoch
             m_iou = self.evaluate(dataset)
 
-            if m_iou > np.max(self.mIou_list):
-                snapshot_directory = join(
-                    self.saving_path,
-                    'snapshots'
-                )
+            snapshot_directory = join(self.saving_path, 'snapshots')
+            if not exists(snapshot_directory):
+                makedirs(snapshot_directory)
 
-                makedirs(snapshot_directory) if not exists(
-                    snapshot_directory
-                ) else None
-
-                save_path=self.saver.save(
-                    self.sess,
-                    snapshot_directory + '/snap',
-                    global_step=self.training_step
-                )
-                print('Model saved in file: %s' % save_path)
-
+            save_path = self.saver.save(
+                self.sess,
+                snapshot_directory + '/snap',
+                global_step=self.training_step
+            )
+            print('Checkpoint saved in file: %s' % save_path)
             if len(self.mIou_list)==0 or m_iou > np.max(self.mIou_list):
                 best_path=self.saver.save(
                     self.sess,

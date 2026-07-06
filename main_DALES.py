@@ -373,7 +373,7 @@ if __name__ == '__main__':
     parser.add_argument('--gpu', type=int, default=0)
     parser.add_argument('--mode', type=str, default='train')
     parser.add_argument('--test_area', type=str, default=None)
-    parser.add_argument('--model_path', type=str, default='None')
+    parser.add_argument('--model_path', type=str, default=None)
 
     FLAGS = parser.parse_args()
 
@@ -390,14 +390,20 @@ if __name__ == '__main__':
     if Mode == 'train':
         print("Starting training...")
         model = Network(dataset, cfg)
-        model.train(dataset)
+        
 
+        if FLAGS.model_path is not None:
+            print("Restoring model from ", FLAGS.model_path)
+            model.saver.restore(model.sess, FLAGS.model_path)
+            print("Model restored successfully")
+        model.train(dataset)
+        
     elif Mode == 'test':
         from tester_SemanticKITTI import ModelTester
         cfg.saving = False
         model = Network(dataset, cfg)
 
-        if FLAGS.model_path != 'None':
+        if FLAGS.model_path is not None:
             chosen_snap = FLAGS.model_path
         else:
             logs = np.sort([
